@@ -8,41 +8,45 @@ from pygame import mixer
 
 path = os.getcwd()
 
-#initialization for alert sound
+# initialization for alert sound
 mixer.init()
 
 alert = mixer.Sound('/sounds/alert1.wav')
- 
-#note :- HaarCascade is trained by superimposing the positive images over a set of negative images
-#haar cascade classifier for face
-face = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_frontalface_alt.xml')
-#haar cascade classifier for left eye
-lefteye = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_lefteye_2splits.xml')
-#haar cascade classifier for right eye
-righteye = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_righteye_2splits.xml')
 
-eye = ['Closed','Open']
+# note :- HaarCascade is trained by superimposing the positive images over a set of negative images
+# haar cascade classifier for face
+face = cv2.CascadeClassifier(
+    '/HaarCascadeFiles/haarcascade_frontalface_alt.xml')
+# haar cascade classifier for left eye
+lefteye = cv2.CascadeClassifier(
+    '/HaarCascadeFiles/haarcascade_lefteye_2splits.xml')
+# haar cascade classifier for right eye
+righteye = cv2.CascadeClassifier(
+    '/HaarCascadeFiles/haarcascade_righteye_2splits.xml')
 
-#load CNN model
+eye = ['Closed', 'Open']
+
+# load CNN model
 model = load_model('/cnnmodel/cnn.h5')
-#initialize webcam
+# initialize webcam
 capture = cv2.VideoCapture(0)
 
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 count = 0
-score = 0 
+score = 0
 thres = 2
 rightpred = [99]
 leftpred = [99]
 
 while(True):
-	ret, frame = capture.read()
-	height,width = frame.shape[:2]
+    ret, frame = capture.read()
+	height, width = frame.shape[:2]
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-	faces = face.detectMultiScale(gray,minNeighbors=5,scaleFactor=1.1,minSize=(25,25))
-	left_eye = lefteye.detectMultiScale(gray)
+	faces = face.detectMultiScale(
+	    gray, minNeighbors=5, scaleFactor=1.1, minSize=(25, 25))
+    left_eye=lefteye.detectMultiScale(gray)
     right_eye = righteye.detectMultiScale(gray)
-	cv2.rectangle(frame, (0,height-50) , (200,height) , (0,0,0) , thickness=cv2.FILLED )
+    cv2.rectangle(frame,(0,height-50),(200,height),(0,255,0),thickness=cv2.FILLED)
 	for (x,y,w,h) in faces:
         cv2.rectangle(frame, (x,y) , (x+w,y+h) , (255,0,0) , 1 )
 	for (x,y,w,h) in right_eye:
@@ -75,10 +79,10 @@ while(True):
         break
 	if(rightpred[0]==0 and leftpred[0]==0):
         score=score+1
-        cv2.putText(frame,"Closed",(10,height-20), font, 1,(255,255,255),1,cv2.LINE_AA)
+        cv2.putText(frame,"Closed",(10,height-20), font, 1,(0,0,255),1,cv2.LINE_AA)
 	else:
         score=score-1
-        cv2.putText(frame,"Open",(10,height-20), font, 1,(255,255,255),1,cv2.LINE_AA)
+        cv2.putText(frame,"Open",(10,height-20), font, 1,(0,255,0),1,cv2.LINE_AA)
 	
 	if(score<0):
         score=0
