@@ -10,6 +10,12 @@ from pygame import mixer
 mixer.init()
 
 alert = mixer.Sound('/sounds/alert1.wav')
+ 
+#note :- HaarCascade is trained by superimposing the positive images over a set of negative images
+#haar cascade classifier for face
+face = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_frontalface_alt.xml')
+#haar cascade classifier for left eye
+lefteye = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_lefteye_2splits.xml')
+#haar cascade classifier for right eye
+righteye = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_righteye_2splits.xml')
 
-#haar caccade classifier for face 
-face = cv2.
