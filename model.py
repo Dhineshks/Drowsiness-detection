@@ -79,4 +79,32 @@ while(True):
 	else:
         score=score-1
         cv2.putText(frame,"Open",(10,height-20), font, 1,(255,255,255),1,cv2.LINE_AA)
+	
+	if(score<0):
+        score=0
+    cv2.putText(frame,'Score:'+str(score),(100,height-20), font, 1,(255,255,255),1,cv2.LINE_AA)
+
+	if(score>15):
+        cv2.imwrite(os.path.join(path,'img.jpg'),frame)
+        try:
+            sound.play()
+        except: 
+            pass
+		if(thres<16):
+            thres = thres+2
+		else:
+            thres =thres-2
+            if(thres<2):
+                thres=2
+		cv2.rectangle(frame,(0,0),(width,height),(0,0,255),thres)
+        cv2.putText(frame,"!!!!!!!!!!!!!!SLEEP DETECTED!!!!!!!!!!!!!!!",(10,30),
+                               cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,0,255),2)
+    
+	cv2.imshow('frame',frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+capture.release()
+cv2.destroyAllWindows()
+
+
 
