@@ -9,7 +9,7 @@ from pygame import mixer
 path = os.getcwd()
 #initializing mixer for alert sound
 mixer.init()
-alert = mixer.Sound('/home/dhinesh/machinelearning/github/Drowsiness-detection/sounds/alert2.wav')
+alert = mixer.Sound('/home/dhinesh/machinelearning/github/Drowsiness-detection/sounds/alert1s.wav')
 # note :- HaarCascade is trained by superimposing the positive images over a set of negative images
 # haar cascade classifier for face
 face = cv2.CascadeClassifier('/home/dhinesh/machinelearning/github/Drowsiness-detection/HaarCascadeFiles/haarcascade_frontalface_alt.xml')
