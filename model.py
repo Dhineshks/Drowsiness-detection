@@ -6,6 +6,8 @@ from keras.models import load_model
 import numpy as np
 from pygame import mixer
 
+path = os.getcwd()
+
 #initialization for alert sound
 mixer.init()
 
@@ -19,3 +21,7 @@ lefteye = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_lefteye_2splits.x
 #haar cascade classifier for right eye
 righteye = cv2.CascadeClassifier('/HaarCascadeFiles/haarcascade_righteye_2splits.xml')
 
+eye = ['Closed','Open']
+
+#load CNN model
+model = load_model('/cnnmodel/cnn.h5')
