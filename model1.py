@@ -7,21 +7,21 @@ import numpy as np
 from pygame import mixer
 
 path = os.getcwd()
-
+#initializing mixer for alert sound
 mixer.init()
-
 alert = mixer.Sound('/home/dhinesh/machinelearning/github/Drowsiness-detection/sounds/alert2.wav')
-
+# note :- HaarCascade is trained by superimposing the positive images over a set of negative images
+# haar cascade classifier for face
 face = cv2.CascadeClassifier('/home/dhinesh/machinelearning/github/Drowsiness-detection/HaarCascadeFiles/haarcascade_frontalface_alt.xml')
-
+# haar cascade classifier for left eye
 lefteye = cv2.CascadeClassifier('/home/dhinesh/machinelearning/github/Drowsiness-detection/HaarCascadeFiles/haarcascade_lefteye_2splits.xml')
-
+# haar cascade classifier for right eye
 righteye = cv2.CascadeClassifier('/home/dhinesh/machinelearning/github/Drowsiness-detection/HaarCascadeFiles/haarcascade_righteye_2splits.xml')
 
 eye = ['Closed','Open']
-
+#cnn model
 model = load_model('/home/dhinesh/machinelearning/github/Drowsiness-detection/cnnmodel/cnn.h5')
-
+#opens default webcam
 capture = cv2.VideoCapture(0)
 
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
@@ -93,7 +93,7 @@ while(True):
 			if(thres<2):
 				thres = 2
 		cv2.rectangle(frame,(0,0),(width,height),(0,0,255),thres)
-		cv2.putText(frame,"!!!!!!!!!!!!!!!!!!!SLEEP ALERT!!!!!!!!!!!!!!!!",(10,30),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,0,255),2)
+		cv2.putText(frame,"SLEEP ALERT!!",(10,30),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,0,255),2)
 	
 	cv2.imshow('frame',frame)
 	if cv2.waitKey(1) & 0xFF == ord('q'):
